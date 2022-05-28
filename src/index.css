@@ -1,13 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap");
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Lato", "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-con {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.forms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.subform {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.input {
+  margin-top: 2px;
+  width: 19vw;
+  min-width: 200px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid;
+  font-size: 18px;
+  padding-left: 0.5vw;
+  font-family: "Poppins", sans-serif;
+}
+
+.input:focus {
+  outline: none !important;
+  border: 1px solid rgb(82, 156, 220);
+  box-shadow: 0 0 5px #719ece;
+}
+
+#submit {
+  margin-top: 10px;
+  width: 20vw;
+  height: 40px;
+  font-weight: bold;
+  color: white;
+  background-color: rgb(65, 14, 113);
+  border: 1px solid black;
+  font-size: 18px;
+  border-radius: 5px;
+  letter-spacing: -1px;
+  min-width: 212px;
 }
