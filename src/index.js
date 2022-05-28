@@ -4,13 +4,12 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
+let isAuthenticated = false;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Router>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <React.StrictMode>{isAuthenticated ? {} : <App />}</React.StrictMode>
   </Router>
 );
 

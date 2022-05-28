@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import Login from "./components/Login.js";
 import Register from "./components/Register.js";
-let isAuthenticated = false;
 
 const Dashboard = () => {
   let match = useRouteMatch();
@@ -31,40 +30,17 @@ const Messages = () => {
 };
 
 function App() {
-  return isAuthenticated ? (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        </ul>
-      </nav>
+  return (
+    <div id="main">
       <Switch>
-        <Route path="/messages">
-          <Messages />
+        <Route path="/register">
+          <Register />
         </Route>
-        <Route path="/channels">
-          <Channels />
-        </Route>
-        <Route path="/dashboard">
-          <Dashboard />
+        <Route exact path="/">
+          <Login />
         </Route>
       </Switch>
     </div>
-  ) : (
-    <>
-      <div id="main">
-        <Switch>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route exact path="/">
-            <Login />
-          </Route>
-        </Switch>
-      </div>
-    </>
   );
 }
 
