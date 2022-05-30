@@ -1,35 +1,13 @@
 import "./App.css";
 import React from "react";
 import {
-  BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  useRouteMatch,
+  Route
 } from "react-router-dom";
-import Login from "./components/Login.js";
-import Register from "./components/Register.js";
+import Login from "./components/non-user/Login.js";
+import Register from "./components/non-user/Register.js";
 
-const Dashboard = () => {
-  let match = useRouteMatch();
-
-  return (
-    <div>
-      <h2>Dashboard</h2>
-      <Channels />
-      <Messages />
-    </div>
-  );
-};
-
-const Channels = () => {
-  return <h3>Channels</h3>;
-};
-const Messages = () => {
-  return <h3>Messages</h3>;
-};
-
-function App() {
+function App({setAccessToken, setClientToken, setExpiry, setUid}) {
   return (
     <div id="main">
       <Switch>
@@ -37,11 +15,14 @@ function App() {
           <Register />
         </Route>
         <Route exact path="/">
-          <Login />
+          <Login setAccessToken={setAccessToken} 
+        setClientToken={setClientToken} 
+        setExpiry={setExpiry} 
+        setUid={setUid}/>
         </Route>
       </Switch>
     </div>
-  );
+  )
 }
 
 export default App;
