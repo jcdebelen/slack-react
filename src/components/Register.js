@@ -1,21 +1,30 @@
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { register } from "../api";
+import { useState } from "react";
 
 const Register = () => {
+  const [emailAddress, setEmailAddress] = useState('')
+  const [password, setPassword] = useState('')
+  const [repeatPassword, setRepeatPassword] = useState('')
+
   return (
     <div id="main-con">
       <h1>Slack Registration</h1>
-      <form className="forms">
+      <form className="forms" onSubmit={e => {
+        e.preventDefault()
+        register(emailAddress, password, repeatPassword)
+      }}>
         <div className="subform">
           <label>Email address</label>
-          <input type="text" className="input"></input>
+          <input type="text" className="input" value={emailAddress} onChange={e => setEmailAddress(e.target.value)}></input>
         </div>
         <div className="subform">
           <label>Password</label>
-          <input type="password" className="input"></input>
+          <input type="password" className="input" value={password} onChange={e => setPassword(e.target.value)}></input>
         </div>
         <div className="subform">
           <label>Repeat Password</label>
-          <input type="password" className="input"></input>
+          <input type="password" className="input" value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)}></input>
         </div>
         <button type="submit" id="submit">
           Register
