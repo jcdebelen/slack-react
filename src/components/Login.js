@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { login } from "../api";
 import { useState } from "react";
 
 const Login = () => {
@@ -22,6 +21,30 @@ const Login = () => {
   // setClientToken(accountHeaders[2][1]) /* client-token header */
   // setExpiry(accountHeaders[4][1]) /* expiry header */
   // setUid(accountHeaders[6][1]) /* uid header */
+
+  function login(email, password) {
+    let data = {
+      email: email,
+      password: password
+  }
+  
+  let requestOptions = {
+      method: 'POST',
+      body: JSON.stringify(data),
+      redirect: 'follow',
+      headers: {
+          'Content-Type': 'Application/json'
+      }
+  
+    };
+    
+    fetch("http://206.189.91.54//api/v1/auth/sign_in", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log(result)})
+    .catch(error => console.log('error', error));
+  
+  }
 
   return (
     <div id="main-con">
