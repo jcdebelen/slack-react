@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const Login = () => {
-  const [emailAddress, setEmailAddress] = useState('')
-  const [password, setPassword] = useState('')
+const Login = ({ status }) => {
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
 
-  // const [accessToken, setAccessToken] = useState('')
-  // const [clientToken, setClientToken] = useState('')
-  // const [expiry, setExpiry] = useState('')
-  // const [uid, setUid] = useState('')
+  const [accessToken, setAccessToken] = useState("");
+  const [clientToken, setClientToken] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [uid, setUid] = useState("");
 
   // console.log(accessToken)
   // console.log(clientToken)
@@ -25,41 +25,60 @@ const Login = () => {
   function login(email, password) {
     let data = {
       email: email,
-      password: password
-  }
-  
-  let requestOptions = {
-      method: 'POST',
-      body: JSON.stringify(data),
-      redirect: 'follow',
-      headers: {
-          'Content-Type': 'Application/json'
-      }
-  
+      password: password,
     };
-    
+
+    let requestOptions = {
+      method: "POST",
+      body: JSON.stringify(data),
+      redirect: "follow",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    };
+
     fetch("http://206.189.91.54//api/v1/auth/sign_in", requestOptions)
-    .then(response => response.text())
-    .then(result => {
-      console.log(result)})
-    .catch(error => console.log('error', error));
-  
+      .then((response) => {
+        {
+          let a = [...response.headers];
+          console.log(a);
+          return response.text();
+        }
+      })
+      .then((result) => {
+        console.log(result);
+        status(true);
+      })
+      .catch((error) => console.log("error", error));
   }
 
   return (
     <div id="main-con">
       <h1>Sign in to Slack</h1>
-      <form className="forms" onSubmit={e => {
-        e.preventDefault()
-        login(emailAddress, password)
-      }}>
+      <form
+        className="forms"
+        onSubmit={(e) => {
+          e.preventDefault();
+          login(emailAddress, password);
+        }}
+      >
         <div className="subform">
           <label>Email address</label>
-          <input type="text" className="input" value={emailAddress} onChange={e => setEmailAddress(e.target.value)}></input>
+          <input
+            type="text"
+            className="input"
+            value={emailAddress}
+            onChange={(e) => setEmailAddress(e.target.value)}
+          ></input>
         </div>
         <div className="subform">
           <label>Password</label>
-          <input type="password" className="input" value={password} onChange={e => setPassword(e.target.value)}></input>
+          <input
+            type="password"
+            className="input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          ></input>
         </div>
         <button type="submit" id="submit">
           Sign In
