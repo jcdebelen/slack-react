@@ -1,8 +1,12 @@
 import React from "react";
 import { useState } from "react";
 
-export default function Channels({ accessToken, clientToken, expiry, uid }) {
+export default function Channels({ requiredHeaders }) {
   let [channel, setChannel] = useState("");
+  let [modal, setModal] = useState(false);
+  let [members, setMembers] = useState([]);
+  let [member, setMember] = useState("");
+
   let id = [2087];
 
   let createChannel = (channel, id) => {
@@ -13,15 +17,13 @@ export default function Channels({ accessToken, clientToken, expiry, uid }) {
 
     var myHeaders = new Headers();
 
-    myHeaders.append("access-token", accessToken);
-    myHeaders.append("client", clientToken);
-    myHeaders.append("expiry", expiry);
-    myHeaders.append("uid", uid);
+    myHeaders.append("access-token", requiredHeaders.accessToken);
+    myHeaders.append("client", requiredHeaders.clientToken);
+    myHeaders.append("expiry", requiredHeaders.expiry);
+    myHeaders.append("uid", requiredHeaders.uid);
     myHeaders.append("Content-Type", "Application/json");
 
     var raw = JSON.stringify(data);
-
-    console.log({ accessToken, clientToken, expiry, uid });
 
     var requestOptions = {
       method: "POST",
@@ -39,22 +41,59 @@ export default function Channels({ accessToken, clientToken, expiry, uid }) {
       })
       .catch((error) => console.log("error", error));
   };
+
+  let addMember = (newMember) => {
+    setMembers((prevData) => {
+      return [newMember, ...prevData];
+    });
+  };
+
   return (
-    <div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          createChannel(channel, id);
-        }}
-      >
-        <input
-          type="text"
-          className="input"
-          value={channel}
-          onChange={(e) => setChannel(e.target.value)}
-        ></input>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <>
+      <h1>Channels</h1>
+      {modal ? (
+        <div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              addMember(member);
+            }}
+          >
+            <label>Invite Members</label>
+            <input
+              type="email"
+              className="input"
+              value={member}
+              onChange={(e) => setMember(e.target.value)}
+            ></input>
+            <button type="submit">add</button>
+          </form>
+          <p>
+            {members.map((email, index) => (
+              <div key={index}>{email}</div>
+            ))}
+          </p>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createChannel(channel, id);
+            }}
+          >
+            <label>Channel Name</label>
+            <input
+              type="text"
+              className="input"
+              value={channel}
+              onChange={(e) => setChannel(e.target.value)}
+            ></input>
+            <button type="submit">Create</button>
+          </form>
+        </div>
+      ) : (
+        <>
+          <button onClick={setModal(true)}> Create Channel</button>
+        </>
+      )}
+    </>
   );
 }
