@@ -8,7 +8,7 @@ export default function Dashboard({ requiredHeaders }) {
   return (
     <div>
       <h2>Dashboard</h2>
-      <Channels />
+      <Channels requiredHeaders={requiredHeaders} />
       <Messages requiredHeaders={requiredHeaders} />
     </div>
   );
