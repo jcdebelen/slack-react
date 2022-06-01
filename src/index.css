@@ -74,3 +74,76 @@ code {
   letter-spacing: -1px;
   min-width: 212px;
 }
+
+/* Dashboard CSS */
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+/* Sidebar css */
+.sidebar {
+  min-width: 260px;
+  background-color: #19171d;
+  color: #d1d2d3;
+}
+
+.sidebar-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgb(43, 42, 47);
+  border-bottom: 1px solid rgb(43, 42, 47);
+  height: 50px;
+}
+
+/* ListofDMs css */
+.header-dm {
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.hovered {
+  visibility: visible;
+}
+
+.not-hovered {
+  visibility: hidden;
+}
+
+.dms-active {
+  display: block;
+}
+
+.dms-inactive {
+  display: none;
+}
+
+.ul-DMUsers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.li-DMUser {
+  height: 28px;
+  font-size: 15px;
+  padding-right: 16px;
+  padding-left: 29px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.li-DMUser:hover {
+  background-color: #27242C;
+}

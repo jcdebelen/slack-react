@@ -7,7 +7,7 @@ import Sidebar from "./components/user/sidebar/Sidebar";
 export default function Dashboard({ requiredHeaders }) {
   let match = useRouteMatch();
   return (
-    <div>
+    <div className="dashboard">
       <Sidebar requiredHeaders={requiredHeaders} />
       <Messages requiredHeaders={requiredHeaders} />
     </div>
