@@ -1,27 +1,33 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Channels({ requiredHeaders }) {
-  let [channel, setChannel] = useState("");
+  let [createchannel, setCreateChannel] = useState("");
   let [modal, setModal] = useState(false);
   let [members, setMembers] = useState([]);
   let [member, setMember] = useState("");
+  let [ids, setIds] = useState([]);
+  let [channels, setChannels] = useState([]);
 
-  let id = [2087];
+  var myHeaders = new Headers();
 
-  let createChannel = (channel, id) => {
+  var requestGet = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  myHeaders.append("access-token", requiredHeaders.accessToken);
+  myHeaders.append("client", requiredHeaders.clientToken);
+  myHeaders.append("expiry", requiredHeaders.expiry);
+  myHeaders.append("uid", requiredHeaders.uid);
+  myHeaders.append("Content-Type", "Application/json");
+
+  let createChannel = (createchannel, ids) => {
     let data = {
-      name: channel,
-      user_ids: id,
+      name: createchannel,
+      user_ids: ids,
     };
-
-    var myHeaders = new Headers();
-
-    myHeaders.append("access-token", requiredHeaders.accessToken);
-    myHeaders.append("client", requiredHeaders.clientToken);
-    myHeaders.append("expiry", requiredHeaders.expiry);
-    myHeaders.append("uid", requiredHeaders.uid);
-    myHeaders.append("Content-Type", "Application/json");
 
     var raw = JSON.stringify(data);
 
@@ -43,16 +49,56 @@ export default function Channels({ requiredHeaders }) {
   };
 
   let addMember = (newMember) => {
-    setMembers((prevData) => {
-      return [newMember, ...prevData];
-    });
+    fetch("http://206.189.91.54//api/v1/users", requestGet)
+      .then((response) => response.text())
+      .then((result) => {
+        let parse = JSON.parse(result).data;
+        let find = parse.find((email) => {
+          return email.uid === member;
+        });
+
+        if (find !== undefined) {
+          let id = find.id;
+          setMembers((prevData) => {
+            return [newMember, ...prevData];
+          });
+          setIds((prevData) => {
+            return [id, ...prevData];
+          });
+        } else console.log("no user");
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  // show channels
+  useEffect(() => {
+    fetch("http://206.189.91.54//api/v1/channels", requestGet)
+      .then((response) => response.text())
+      .then((result) => {
+        let parse = JSON.parse(result).data;
+        let channels = parse.map((data) => {
+          return { name: data.name, id: data.id };
+        });
+        setChannels(channels);
+      })
+      .catch((error) => console.log("error", error));
+  });
+
+  let MyChannels = () => {
+    return channels.map((channels, index) => (
+      <div key={index}>
+        <button>{channels.name}</button>
+      </div>
+    ));
   };
 
   return (
     <>
       <h1>Channels</h1>
+      <MyChannels />
       {modal ? (
         <div>
+          <button onClick={() => setModal(false)}>x</button>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -76,22 +122,22 @@ export default function Channels({ requiredHeaders }) {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              createChannel(channel, id);
+              createChannel(createchannel, ids);
             }}
           >
             <label>Channel Name</label>
             <input
               type="text"
               className="input"
-              value={channel}
-              onChange={(e) => setChannel(e.target.value)}
+              value={createchannel}
+              onChange={(e) => setCreateChannel(e.target.value)}
             ></input>
             <button type="submit">Create</button>
           </form>
         </div>
       ) : (
         <>
-          <button onClick={setModal(true)}> Create Channel</button>
+          <button onClick={() => setModal(true)}> Create Channel</button>
         </>
       )}
     </>
