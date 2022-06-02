@@ -107,6 +107,8 @@ export default function Messages({
     showUser(requiredHeaders);
   }, [searchUserInput]);
 
+  function updateScroll(element) {}
+
   function submitHandler(e) {
     e.preventDefault();
     sendMessage(requiredHeaders, selectedUserId, messageInput);

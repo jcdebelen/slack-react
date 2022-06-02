@@ -12,12 +12,11 @@ export default function Dashboard({ requiredHeaders }) {
   const [selectedUserEmail, setSelectedUserEmail] = useState("");
 
   return (
-    <div>
+    <div className="dashboard">
       <Sidebar
         requiredHeaders={requiredHeaders}
         selectedUserEmail={selectedUserEmail}
         setSelectedUserEmail={setSelectedUserEmail}
-        selectedUserId={selectedUserId}
         setSelectedUserId={setSelectedUserId}
       />
       <Messages
