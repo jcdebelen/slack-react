@@ -107,7 +107,7 @@ export default function ListOfChannels({ requiredHeaders }) {
 
   return (
     <>
-      <h4>Channels</h4>
+      <h4 id="channel-title">Channels</h4>
       <MyChannels />
       {modal ? (
         <div>
