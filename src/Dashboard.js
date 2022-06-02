@@ -1,15 +1,20 @@
 import React from "react";
-import { useRouteMatch } from "react-router-dom";
 import Messages from "./components/user/Messages";
+import Channels from "./components/user/Channels";
 import ListOfChannels from "./components/user/sidebar/ListOfChannels";
+import ListOfDMs from "./components/user/sidebar/ListOfDMs";
 
 export default function Dashboard({ requiredHeaders }) {
-  let match = useRouteMatch();
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <ListOfChannels requiredHeaders={requiredHeaders} />
-      <Messages requiredHeaders={requiredHeaders} />
+    <div id="dashboard">
+      <nav id="sidebar">
+        <ListOfChannels requiredHeaders={requiredHeaders} />
+        <ListOfDMs requiredHeaders={requiredHeaders} />
+      </nav>
+      <div id="conversations">
+        <Messages requiredHeaders={requiredHeaders} />
+        <Channels requiredHeaders={requiredHeaders} />
+      </div>
     </div>
   );
 }
