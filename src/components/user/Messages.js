@@ -71,15 +71,28 @@ function sendMessage(headersObject, receiverId, message) {
     .catch((error) => console.log("error", error));
 }
 
-export default function Messages({ requiredHeaders }) {
+export default function Messages({
+  requiredHeaders,
+  selectedUserEmail,
+  setSelectedUserEmail,
+  selectedUserId,
+  setSelectedUserId,
+}) {
   const [messageInput, setMessageInput] = useState("");
   const [listOfMessages, setListOfMessages] = useState([]);
   const [searchUserInput, setSearchUserInput] = useState("");
   const [searchedUser, setSearchedUser] = useState([]);
-  const [selectedUserId, setSelectedUserId] = useState("");
 
   let users = searchedUser.map((user, i) => (
-    <h1 key={i} id={user.id} onClick={(e) => setSelectedUserId(e.target.id)}>
+    <h1
+      key={i}
+      id={user.id}
+      data={user.uid}
+      onClick={(e) => {
+        setSelectedUserId(e.target.id);
+        setSelectedUserEmail(e.target.getAttribute("data"));
+      }}
+    >
       {user.uid}
     </h1>
   ));
@@ -135,7 +148,7 @@ export default function Messages({ requiredHeaders }) {
 
   return (
     <div>
-      <h1>New Messages</h1>
+      <h1 className="receiver-name">{selectedUserEmail}</h1>
       <input
         className="search-all-user-input"
         type="text"
