@@ -71,3 +71,7 @@
 .send-message-button {
   height: 100px;
 }
+
+.messages-dashboard {
+  flex-grow: 2;
+}

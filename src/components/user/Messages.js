@@ -142,7 +142,7 @@ export default function Messages({
   }
 
   return (
-    <div>
+    <div className="messages-dashboard">
       <h1 className="receiver-name">{selectedUserEmail}</h1>
       <input
         className="search-all-user-input"
