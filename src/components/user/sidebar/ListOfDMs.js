@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { MdArrowRight } from "react-icons/md";
@@ -15,14 +15,16 @@ export default function ListOfDMs({
   const [recentDMUsers, setRecentDMUsers] = useState([]);
   // const [isUserSelected, setIsUserSelected] = useState(false);
 
+  useEffect(() => {
+    apiRecentDM();
+  }, [recentDMUsers]);
+
   const handleNewMessageClicked = () => {
     setSelectedUserEmail("New Message");
     setSelectedUserId("");
   };
 
-  const handleDMHeaderCLicked = () => {
-    setIsDMHeaderClicked(!isDMHeaderClicked);
-
+  function apiRecentDM() {
     //Get recently DMS API
     var myHeaders = new Headers();
     myHeaders.append("access-token", requiredHeaders.accessToken);
@@ -46,6 +48,11 @@ export default function ListOfDMs({
         // setRecentDMUsers(listOfRecentDMs.filter((obj, i) => listOfRecentDMs.indexOf(obj) === i))
       })
       .catch((error) => console.log("error", error));
+  }
+
+  const handleDMHeaderCLicked = () => {
+    setIsDMHeaderClicked(!isDMHeaderClicked);
+    apiRecentDM();
   };
 
   function DMUsers({ recentDMUsers, setSelectedUserEmail, setSelectedUserId }) {

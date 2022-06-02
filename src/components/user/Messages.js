@@ -1,33 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-// Retrieve Message API ========================================
-
-function retrieveMessage(headersObject, senderId, setListOfMessages) {
-  let myHeaders = new Headers();
-  myHeaders.append("access-token", headersObject.accessToken);
-  myHeaders.append("client", headersObject.clientToken);
-  myHeaders.append("expiry", headersObject.expiry);
-  myHeaders.append("uid", headersObject.uid);
-  myHeaders.append("Content-Type", "Application/json");
-
-  let requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-  };
-
-  fetch(
-    `http://206.189.91.54//api/v1/messages?sender_id=${headersObject.currentUserId}&receiver_class=User&receiver_id=${senderId}`,
-    requestOptions
-  )
-    .then((response) => response.text())
-    .then((result) => setListOfMessages(JSON.parse(result).data))
-    .catch((error) => console.log("error", error));
-}
-
-// ========================================
-
 // Send Message API ========================================
 
 function sendMessage(headersObject, receiverId, message) {
@@ -71,6 +44,33 @@ export default function Messages({
   const [searchUserInput, setSearchUserInput] = useState("");
   const [searchedUser, setSearchedUser] = useState([]);
 
+  // Retrieve Message API ========================================
+
+  function retrieveMessage(headersObject, senderId) {
+    let myHeaders = new Headers();
+    myHeaders.append("access-token", headersObject.accessToken);
+    myHeaders.append("client", headersObject.clientToken);
+    myHeaders.append("expiry", headersObject.expiry);
+    myHeaders.append("uid", headersObject.uid);
+    myHeaders.append("Content-Type", "Application/json");
+
+    let requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://206.189.91.54//api/v1/messages?sender_id=${headersObject.currentUserId}&receiver_class=User&receiver_id=${senderId}`,
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => setListOfMessages(JSON.parse(result).data))
+      .catch((error) => console.log("error", error));
+  }
+
+  // ========================================
+
   let messages = listOfMessages.map((message, i) => {
     return (
       <div className="message-container" key={i}>
@@ -100,8 +100,8 @@ export default function Messages({
 
   useEffect(() => {
     if (selectedUserId === null || selectedUserId === "") return;
-    retrieveMessage(requiredHeaders, selectedUserId, setListOfMessages);
-  }, [selectedUserId, listOfMessages]);
+    retrieveMessage(requiredHeaders, selectedUserId);
+  }, [selectedUserId, messageInput]);
 
   useEffect(() => {
     showUser(requiredHeaders);
@@ -112,7 +112,7 @@ export default function Messages({
   function submitHandler(e) {
     e.preventDefault();
     sendMessage(requiredHeaders, selectedUserId, messageInput);
-    retrieveMessage(requiredHeaders, selectedUserId, setListOfMessages);
+    retrieveMessage(requiredHeaders, selectedUserId);
     setMessageInput("");
   }
 
@@ -162,7 +162,7 @@ export default function Messages({
           if (e.key == "Enter") {
             e.preventDefault();
             sendMessage(requiredHeaders, selectedUserId, messageInput);
-            retrieveMessage(requiredHeaders, selectedUserId, setListOfMessages);
+            retrieveMessage(requiredHeaders, selectedUserId);
             setMessageInput("");
           }
         }}
