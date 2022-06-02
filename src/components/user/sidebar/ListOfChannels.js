@@ -99,15 +99,15 @@ export default function ListOfChannels({ requiredHeaders }) {
 
   let MyChannels = () => {
     return channels.map((channels, index) => (
-      <div key={index}>
-        <button>{channels.name}</button>
+      <div className="channel-con" key={index}>
+        <button className="channel-name">{channels.name}</button>
       </div>
     ));
   };
 
   return (
     <>
-      <h1>Channels</h1>
+      <h4>Channels</h4>
       <MyChannels />
       {modal ? (
         <div>
