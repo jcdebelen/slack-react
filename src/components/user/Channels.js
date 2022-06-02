@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 export default function Channels({ requiredHeaders }) {
-  let [createchannel, setCreateChannel] = useState("");
+  let [newChannel, setNewChannel] = useState("");
   let [modal, setModal] = useState(false);
   let [members, setMembers] = useState([]);
   let [member, setMember] = useState("");
@@ -23,9 +23,9 @@ export default function Channels({ requiredHeaders }) {
   myHeaders.append("uid", requiredHeaders.uid);
   myHeaders.append("Content-Type", "Application/json");
 
-  let createChannel = (createchannel, ids) => {
+  let createChannel = (newChannel, ids) => {
     let data = {
-      name: createchannel,
+      name: newChannel,
       user_ids: ids,
     };
 
@@ -46,6 +46,8 @@ export default function Channels({ requiredHeaders }) {
         console.log(result);
       })
       .catch((error) => console.log("error", error));
+
+    getChannels();
   };
 
   let addMember = (newMember) => {
@@ -59,19 +61,26 @@ export default function Channels({ requiredHeaders }) {
 
         if (find !== undefined) {
           let id = find.id;
-          setMembers((prevData) => {
-            return [newMember, ...prevData];
+          let same = members.find((email) => {
+            return email === find.uid;
           });
-          setIds((prevData) => {
-            return [id, ...prevData];
-          });
+          if (same === find.uid) {
+            console.log("user already added");
+          } else {
+            setMembers((prevData) => {
+              return [newMember, ...prevData];
+            });
+            setIds((prevData) => {
+              return [id, ...prevData];
+            });
+          }
         } else console.log("no user");
       })
       .catch((error) => console.log("error", error));
   };
 
   // show channels
-  useEffect(() => {
+  const getChannels = () => {
     fetch("http://206.189.91.54//api/v1/channels", requestGet)
       .then((response) => response.text())
       .then((result) => {
@@ -82,6 +91,10 @@ export default function Channels({ requiredHeaders }) {
         setChannels(channels);
       })
       .catch((error) => console.log("error", error));
+  };
+
+  useEffect(() => {
+    getChannels();
   }, []);
 
   let MyChannels = () => {
@@ -215,16 +228,16 @@ export default function Channels({ requiredHeaders }) {
                                           <form
                                             onSubmit={(e) => {
                                               e.preventDefault();
-                                              createChannel(createchannel, ids);
+                                              createChannel(newChannel, ids);
                                             }}
                                           >
                                             <input
                                               className="c-input_text c-input_text--large c-input_text--with_icon c-select_input p-channel_name_input__select_input"
                                               placeholder="e.g. plan-budget"
                                               type="text"
-                                              value={createchannel}
+                                              value={newChannel}
                                               onChange={(e) =>
-                                                setCreateChannel(e.target.value)
+                                                setNewChannel(e.target.value)
                                               }
                                             />
                                           </form>
