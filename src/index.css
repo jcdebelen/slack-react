@@ -85,18 +85,37 @@ code {
 /* Sidebar css */
 .sidebar {
   min-width: 260px;
-  background-color: #19171d;
+  background-color: #3F0E40;
   color: #d1d2d3;
 }
 
 .sidebar-header {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  border-top: 1px solid rgb(43, 42, 47);
-  border-bottom: 1px solid rgb(43, 42, 47);
+  border-top: 1px solid rgb(82,38,83);
+  border-bottom: 1px solid rgb(82,38,83);
   height: 50px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: #fff;
+}
+
+.sidebar-header:hover {
+  background-color: #350D36;
+}
+
+.button-new-message {
+  color: #3F0E40;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 34px;
+  width: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 /* ListofDMs css */
@@ -110,6 +129,34 @@ code {
   font-size: 15px;
   height: 36px;
   cursor: pointer;
+}
+
+.header-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+.button-dropdown {
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  margin-right: 6px;
+  border-radius: 5px;
+}
+
+.button-plus {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.button-plus:hover,
+.button-dropdown:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .hovered {
@@ -145,5 +192,10 @@ code {
 }
 
 .li-DMUser:hover {
-  background-color: #27242C;
+  background-color: #350D36;
+}
+
+.clicked {
+  background-color: #1164a3;
+  color: #fff;
 }
