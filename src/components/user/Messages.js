@@ -1,25 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-function recentlyDM(headersObject) {
-  let myHeaders = new Headers();
-  myHeaders.append("access-token", headersObject.accessToken);
-  myHeaders.append("client", headersObject.clientToken);
-  myHeaders.append("expiry", headersObject.expiry);
-  myHeaders.append("uid", headersObject.uid);
-  myHeaders.append("Content-Type", "Application/json");
-
-  let requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-  };
-
-  fetch("http://206.189.91.54//api/v1/users/recent", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(JSON.parse(result)))
-    .catch((error) => console.log("error", error));
-}
+// Retrieve Message API ========================================
 
 function retrieveMessage(headersObject, senderId, setListOfMessages) {
   let myHeaders = new Headers();
@@ -43,6 +25,10 @@ function retrieveMessage(headersObject, senderId, setListOfMessages) {
     .then((result) => setListOfMessages(JSON.parse(result).data))
     .catch((error) => console.log("error", error));
 }
+
+// ========================================
+
+// Send Message API ========================================
 
 function sendMessage(headersObject, receiverId, message) {
   let myHeaders = new Headers();
@@ -71,6 +57,8 @@ function sendMessage(headersObject, receiverId, message) {
     .catch((error) => console.log("error", error));
 }
 
+// ========================================
+
 export default function Messages({
   requiredHeaders,
   selectedUserEmail,
@@ -83,43 +71,48 @@ export default function Messages({
   const [searchUserInput, setSearchUserInput] = useState("");
   const [searchedUser, setSearchedUser] = useState([]);
 
-  let users = searchedUser.map((user, i) => (
-    <h1
+  let messages = listOfMessages.map((message, i) => {
+    return (
+      <div className="message-container" key={i}>
+        <div className="sender-details">
+          <h2 className="sender-uid">{message.sender.uid}</h2>
+          <p className="time-sent">{message.created_at}</p>
+        </div>
+        <p className="message-body">{message.body}</p>
+      </div>
+    );
+  });
+
+  let searchedUserList = searchedUser.map((user, i) => (
+    <li
       key={i}
       id={user.id}
       data={user.uid}
       onClick={(e) => {
         setSelectedUserId(e.target.id);
         setSelectedUserEmail(e.target.getAttribute("data"));
+        setSearchUserInput("");
       }}
     >
       {user.uid}
-    </h1>
-  ));
-
-  let messages = listOfMessages.map((message, i) => (
-    <h1 key={i}>{message.body}</h1>
+    </li>
   ));
 
   useEffect(() => {
-    console.log(selectedUserId);
-  }, [selectedUserId]);
-
-  function retrieveMessageButton(e) {
+    if (selectedUserId === null || selectedUserId === "") return;
     retrieveMessage(requiredHeaders, selectedUserId, setListOfMessages);
-  }
-
-  function submitHandler(e) {
-    e.preventDefault();
-    sendMessage(requiredHeaders, selectedUserId, messageInput);
-    setMessageInput("");
-  }
+  }, [selectedUserId, listOfMessages]);
 
   useEffect(() => {
     showUser(requiredHeaders);
   }, [searchUserInput]);
 
-  recentlyDM(requiredHeaders);
+  function submitHandler(e) {
+    e.preventDefault();
+    sendMessage(requiredHeaders, selectedUserId, messageInput);
+    retrieveMessage(requiredHeaders, selectedUserId, setListOfMessages);
+    setMessageInput("");
+  }
 
   function showUser(headersObject) {
     let myHeaders = new Headers();
@@ -155,26 +148,31 @@ export default function Messages({
         value={searchUserInput}
         onChange={(e) => setSearchUserInput(e.target.value)}
       />
-      {users}
-      <button onClick={retrieveMessageButton}>Retrieve Messages</button>
-      {messages}
-      <form onSubmit={submitHandler}>
+      {searchUserInput === "" ? null : (
+        <ul className="searched-user-container">{searchedUserList}</ul>
+      )}
+      <div className="messages-container">
+        {selectedUserId === "" ? null : messages}
+      </div>
+      <form
+        className="send-message-form"
+        onKeyDown={(e) => {
+          if (e.key == "Enter") {
+            e.preventDefault();
+            sendMessage(requiredHeaders, selectedUserId, messageInput);
+            retrieveMessage(requiredHeaders, selectedUserId, setListOfMessages);
+            setMessageInput("");
+          }
+        }}
+        onSubmit={submitHandler}
+      >
         <textarea
+          className="message-body"
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
         ></textarea>
-        <input type="submit" value="Send" />
+        <input className="send-message-button" type="submit" value="Send" />
       </form>
     </div>
   );
 }
-
-// (
-//   <div>
-//     <h1 className="receiver-user"></h1>
-//     <input className="search-bar"/>
-//     <div className="list-of-user"></div>
-//     <div className="list-of-messages"></div>
-//     <textarea className="message-body"></textarea>
-//   </div>
-// )
