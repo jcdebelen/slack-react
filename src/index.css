@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --hover: rgb(96, 20, 96);
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Lato", "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -138,11 +142,32 @@ code {
   justify-content: space-between;
 }
 
+#sidebar::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+}
+
+#sidebar::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(101, 101, 101, 0.7);
+}
+#sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(97, 97, 97, 0.9);
+}
+#sidebar::-webkit-scrollbar-thumb:active {
+  background: rgba(37, 37, 37, 0.4);
+}
+
 #conversations {
   width: 100%;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 .channel-con {
@@ -172,6 +197,7 @@ code {
   flex-direction: row;
   justify-content: start;
   align-items: center;
+  font-weight: 900;
 }
 
 .button-dropdown {
@@ -221,7 +247,7 @@ code {
   height: 28px;
   font-size: 15px;
   padding-right: 16px;
-  padding-left: 29px;
+  padding-left: 37px;
   cursor: pointer;
 }
 
@@ -379,11 +405,32 @@ code {
 .messages-container {
   width: 100%;
   padding: 1rem 0;
-  height: 78vh;
+  height: 76vh;
   overflow-y: scroll;
   font-family: "Poppins", sans-serif;
+  margin-top: 5px;
 }
 
+.messages-container::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(62, 62, 62, 0.7);
+}
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(97, 97, 97, 0.9);
+}
+.messages-container::-webkit-scrollbar-thumb:active {
+  background: rgba(37, 37, 37, 0.4);
+}
 .send-message-form {
   display: flex;
   margin: 0.5rem;
@@ -394,6 +441,12 @@ code {
   border-radius: 5px;
   padding: 1rem;
   font-family: "Poppins", sans-serif;
+  resize: none;
+  height: 100px !important;
+}
+
+.message-body-input:focus {
+  outline: 0;
 }
 
 .send-message-button {
@@ -404,6 +457,11 @@ code {
   box-shadow: 0 0 1.5px 1px black;
   border-radius: 5px;
   font-family: "Poppins", sans-serif;
+  background: rgb(65, 14, 113);
+  box-shadow: none;
+  color: #fff;
+  font-weight: 700;
+  transition: all 80ms linear;
 }
 
 .messages-dashboard {
@@ -419,6 +477,14 @@ code {
   box-shadow: 1px 1px 1px 1px black;
   border-radius: 5px;
   height: 35px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  margin: 2rem 0.25rem 0.5rem 0.25rem;
+  font-weight: 400;
+}
+
+#logout-button:hover {
+  background-color: var(--hover);
 }
 
 .error {

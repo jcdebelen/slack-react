@@ -42,6 +42,7 @@ export default function Dashboard({ requiredHeaders, setRequiredHeaders }) {
               setChannelStatus={setChannelStatus}
               setReceiverClass={setReceiverClass}
               setSelectedUserId={setSelectedUserId}
+              setSelectedUserEmail={setSelectedUserEmail}
             />
             <ListOfDMs
               requiredHeaders={requiredHeaders}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Login = ({ setRequiredHeaders }) => {
   const [emailAddress, setEmailAddress] = useState("");
@@ -49,6 +49,14 @@ const Login = ({ setRequiredHeaders }) => {
       })
       .catch((error) => console.log("error", error));
   }
+
+  useEffect(() => {
+    setError("");
+  }, [emailAddress]);
+
+  useEffect(() => {
+    setError("");
+  }, [password]);
 
   return (
     <div id="main-con">

@@ -10,7 +10,7 @@ export default function ListOfDMs({
   setSelectedUserId,
   setReceiverClass,
 }) {
-  const [isDMHeaderClicked, setIsDMHeaderClicked] = useState(false);
+  const [isDMHeaderClicked, setIsDMHeaderClicked] = useState(true);
   const [isDMHeaderHovered, setIsDMHeaderHovered] = useState(false);
   const [recentDMUsers, setRecentDMUsers] = useState([]);
 

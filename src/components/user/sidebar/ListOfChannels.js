@@ -17,7 +17,7 @@ export default function ListOfChannels({
   let [member, setMember] = useState("");
   let [ids, setIds] = useState([]);
   let [channels, setChannels] = useState([]);
-  let [isChannelHeaderClicked, setIsChannelHeaderClicked] = useState(false);
+  let [isChannelHeaderClicked, setIsChannelHeaderClicked] = useState(true);
 
   useEffect(() => {
     setChannels(channels);
@@ -111,33 +111,37 @@ export default function ListOfChannels({
       .catch((error) => console.log("error", error));
   };
 
-  //prevent getChannelList from running every second
+  // prevent getChannelList from running every second
   useEffect(() => {
-    getChannelList();
-  }, []);
+    const refresh = setInterval(() => {
+      getChannelList();
+    }, 1000);
+    return () => {
+      clearInterval(refresh);
+    };
+  });
 
   // My Channels Component
   let MyChannels = () => {
     return (
       <>
         {channels.map((channels, index) => (
-          <div className="channel-con" key={index}>
+          <div
+            className="channel-con"
+            key={index}
+            onClick={() => {
+              getChannelInfo(channels.id);
+              setReceiverClass("Channel");
+              setSelectedUserId(channels.id);
+              setSelectedUserEmail(`Channel: ${channels.name}`);
+            }}
+          >
             <img
               src={`${process.env.PUBLIC_URL}hash.png`}
               alt="hash"
               className="icon"
             />
-            <div
-              className="channel-name"
-              onClick={() => {
-                getChannelInfo(channels.id);
-                setReceiverClass("Channel");
-                setSelectedUserId(channels.id);
-                setSelectedUserEmail(`Channel: ${channels.name}`);
-              }}
-            >
-              {channels.name}
-            </div>
+            <div className="channel-name">{channels.name}</div>
           </div>
         ))}
         <div className="channel-con">
