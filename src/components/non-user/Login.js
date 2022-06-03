@@ -4,6 +4,7 @@ import { useState } from "react";
 const Login = ({ setRequiredHeaders }) => {
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [Error, setError] = useState("");
 
   function login(email, password) {
     let data = {
@@ -35,7 +36,9 @@ const Login = ({ setRequiredHeaders }) => {
       })
       .then((result) => {
         let newResult = JSON.parse(result);
-
+        if ("errors" in newResult) {
+          setError(`${newResult.errors[0]}`);
+        }
         let id = newResult.data.id;
 
         setRequiredHeaders((prevData) => {
@@ -65,6 +68,7 @@ const Login = ({ setRequiredHeaders }) => {
             value={emailAddress}
             onChange={(e) => setEmailAddress(e.target.value)}
           ></input>
+          <div className="error"></div>
         </div>
         <div className="subform">
           <label>Password</label>
@@ -74,10 +78,9 @@ const Login = ({ setRequiredHeaders }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></input>
+          <div className="error">{Error}</div>
         </div>
-        <button type="submit" id="submit">
-          Sign In
-        </button>
+        <input type="submit" id="submit" value="Sign In"></input>
       </form>
       <p>
         Not yet registered? <Link to="/register">Sign Up</Link>

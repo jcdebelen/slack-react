@@ -43,7 +43,7 @@ code {
 .subform {
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  /* margin: 10px; */
 }
 
 .input {
@@ -66,7 +66,8 @@ code {
 
 #submit {
   margin-top: 10px;
-  width: 20vw;
+  width: 19vw;
+  min-width: 200px;
   height: 40px;
   font-weight: bold;
   color: white;
@@ -75,7 +76,6 @@ code {
   font-size: 18px;
   border-radius: 5px;
   letter-spacing: -1px;
-  min-width: 212px;
 }
 
 /* Sidebar css */
@@ -125,6 +125,7 @@ code {
   color: rgba(255, 255, 255, 0.85);
   min-width: 200px;
   max-width: 265px;
+  overflow-y: scroll;
 }
 
 #conversations {
@@ -348,4 +349,13 @@ code {
 
 .messages-dashboard {
   flex-grow: 2;
+}
+
+.error {
+  margin-top: 3px;
+  color: red;
+  width: 19vw;
+  min-width: 200px;
+  font-size: 14px;
+  min-height: 20px;
 }
