@@ -13,7 +13,6 @@ export default function ListOfDMs({
   const [isDMHeaderClicked, setIsDMHeaderClicked] = useState(false);
   const [isDMHeaderHovered, setIsDMHeaderHovered] = useState(false);
   const [recentDMUsers, setRecentDMUsers] = useState([]);
-  // const [isUserSelected, setIsUserSelected] = useState(false);
 
   useEffect(() => {
     let intervalId = setInterval(() => {
@@ -63,7 +62,6 @@ export default function ListOfDMs({
     let uniqueRecentDMUsers = [
       ...new Map(recentDMUsers.map((item) => [item["id"], item])).values(),
     ];
-    // console.log(uniqueRecentDMUsers);
 
     return uniqueRecentDMUsers.map(({ email, id }) => (
       <div key={id}>
@@ -78,13 +76,10 @@ export default function ListOfDMs({
   }
 
   function DMUser({ email, id, setSelectedUserEmail, setSelectedUserId }) {
-    // const [isUserClicked, setIsUserClicked] = useState(false);
-
-    const handleUserClicked = (e) => {
+    const handleUserClicked = () => {
       setSelectedUserEmail(email);
       setSelectedUserId(id);
       setReceiverClass("User");
-      // setIsUserClicked(true);
     };
 
     return (
@@ -101,7 +96,7 @@ export default function ListOfDMs({
   return (
     <div>
       <div
-        className="header-dm"
+        className="header"
         onMouseEnter={() => setIsDMHeaderHovered(true)}
         onMouseLeave={() => setIsDMHeaderHovered(false)}
       >
@@ -120,7 +115,7 @@ export default function ListOfDMs({
           <AiOutlinePlus />
         </div>
       </div>
-      <nav className={`${isDMHeaderClicked ? "dms-active" : "dms-inactive"}`}>
+      <nav className={`${isDMHeaderClicked ? "active" : "inactive"}`}>
         <ul className="ul-DMUsers">
           <DMUsers
             recentDMUsers={recentDMUsers}
