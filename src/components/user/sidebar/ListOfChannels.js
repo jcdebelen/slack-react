@@ -226,6 +226,7 @@ export default function ListOfChannels({
                           onSubmit={(e) => {
                             e.preventDefault();
                             addMember(member);
+                            setMember("");
                           }}
                         >
                           <input

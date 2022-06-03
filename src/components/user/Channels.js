@@ -136,6 +136,7 @@ export default function Channels({
                       onSubmit={(e) => {
                         e.preventDefault();
                         searchMember(member);
+                        setMember("");
                       }}
                     >
                       <input
