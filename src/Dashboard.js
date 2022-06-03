@@ -14,6 +14,7 @@ export default function Dashboard({ requiredHeaders }) {
   const [receiverClass, setReceiverClass] = useState("");
 
   const handleNewMessageClicked = () => {
+    setReceiverClass("User");
     setSelectedUserEmail("New Message");
     setSelectedUserId("");
   };

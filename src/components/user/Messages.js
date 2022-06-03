@@ -66,7 +66,7 @@ export default function Messages({
       requestOptions
     )
       .then((response) => response.text())
-      .then((result) => setListOfMessages(JSON.parse(result).data))
+      .then((result) => setListOfMessages(JSON.parse(result).data || []))
       .catch((error) => console.log("error", error));
   }
 
@@ -162,12 +162,14 @@ export default function Messages({
   return (
     <div className="messages-dashboard">
       <h1 className="receiver-name">{selectedUserEmail}</h1>
-      <input
-        className="search-all-user-input"
-        type="text"
-        value={searchUserInput}
-        onChange={(e) => setSearchUserInput(e.target.value)}
-      />
+      {selectedUserId === "" ? (
+        <input
+          className="search-all-user-input"
+          type="text"
+          value={searchUserInput}
+          onChange={(e) => setSearchUserInput(e.target.value)}
+        />
+      ) : null}
       {searchUserInput === "" ? null : (
         <ul className="searched-user-container">{searchedUserList}</ul>
       )}
