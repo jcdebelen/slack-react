@@ -96,7 +96,7 @@ export default function ListOfDMs({
   return (
     <div>
       <div
-        className="header-dm"
+        className="header"
         onMouseEnter={() => setIsDMHeaderHovered(true)}
         onMouseLeave={() => setIsDMHeaderHovered(false)}
       >
@@ -115,7 +115,7 @@ export default function ListOfDMs({
           <AiOutlinePlus />
         </div>
       </div>
-      <nav className={`${isDMHeaderClicked ? "dms-active" : "dms-inactive"}`}>
+      <nav className={`${isDMHeaderClicked ? "active" : "inactive"}`}>
         <ul className="ul-DMUsers">
           <DMUsers
             recentDMUsers={recentDMUsers}

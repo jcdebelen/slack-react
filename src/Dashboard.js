@@ -21,24 +21,32 @@ export default function Dashboard({ requiredHeaders }) {
 
   return (
     <div id="dashboard">
-      <nav id="sidebar">
-        <div className="button-new-message" onClick={handleNewMessageClicked}>
-          <FaRegEdit />
+      <div id="sidebar">
+        <div className="sidebar-header">
+          <h2>Avion School</h2>
+          <div className="button-new-message" onClick={() => {
+            setSelectedUserEmail("New Message");
+            setSelectedUserId("");
+          }}>
+            <FaRegEdit />
+          </div>
         </div>
-        <ListOfChannels
-          requiredHeaders={requiredHeaders}
-          setCurrentChannel={setCurrentChannel}
-          setChannelStatus={setChannelStatus}
-          setReceiverClass={setReceiverClass}
-          setSelectedUserId={setSelectedUserId}
-        />
-        <ListOfDMs
-          requiredHeaders={requiredHeaders}
-          setSelectedUserEmail={setSelectedUserEmail}
-          setSelectedUserId={setSelectedUserId}
-          setReceiverClass={setReceiverClass}
-        />
-      </nav>
+        <nav className="sidebar-content">
+          <ListOfChannels
+            requiredHeaders={requiredHeaders}
+            setCurrentChannel={setCurrentChannel}
+            setChannelStatus={setChannelStatus}
+            setReceiverClass={setReceiverClass}
+            setSelectedUserId={setSelectedUserId}
+            />
+          <ListOfDMs
+            requiredHeaders={requiredHeaders}
+            setSelectedUserEmail={setSelectedUserEmail}
+            setSelectedUserId={setSelectedUserId}
+            setReceiverClass={setReceiverClass}
+          />
+        </nav>
+      </div>
       <div id="conversations">
         <Channels
           requiredHeaders={requiredHeaders}

@@ -83,7 +83,7 @@ code {
   min-width: 260px;
   background-color: #3f0e40;
   color: #d1d2d3;
-}
+} */
 
 .sidebar-header {
   display: flex;
@@ -102,6 +102,10 @@ code {
   background-color: #350d36;
 }
 
+.sidebar-content {
+  overflow-y: auto;
+}
+
 .button-new-message {
   color: #3f0e40;
   background-color: #fff;
@@ -109,7 +113,10 @@ code {
   height: 34px;
   width: 34px;
   display: flex;
-  justify-content: center; */
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
 
 #dashboard {
   height: 100vh;
@@ -119,7 +126,7 @@ code {
 }
 
 #sidebar {
-  background-color: rgb(85, 26, 85);
+  background-color: #3f0e40;
   width: 17%;
   height: 100vh;
   color: rgba(255, 255, 255, 0.85);
@@ -142,7 +149,7 @@ code {
 }
 
 /* ListofDMs css */
-.header-dm {
+.header {
   padding-left: 16px;
   padding-right: 16px;
   display: flex;
@@ -190,11 +197,11 @@ code {
   visibility: hidden;
 }
 
-.dms-active {
+.active {
   display: block;
 }
 
-.dms-inactive {
+.inactive {
   display: none;
 }
 

@@ -1,5 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { MdArrowDropDown } from "react-icons/md";
+import { MdArrowRight } from "react-icons/md";
 
 export default function ListOfChannels({
   requiredHeaders,
@@ -14,6 +16,7 @@ export default function ListOfChannels({
   let [member, setMember] = useState("");
   let [ids, setIds] = useState([]);
   let [channels, setChannels] = useState([]);
+  let [isChannelHeaderClicked, setIsChannelHeaderClicked] = useState(false)
 
   useEffect(() => {
     setChannels(channels);
@@ -114,15 +117,6 @@ export default function ListOfChannels({
   let MyChannels = () => {
     return (
       <>
-        <div id="channel-title-con">
-          <img
-            src={`${process.env.PUBLIC_URL}arrowdown.png`}
-            alt="arrowdown"
-            className="arrowdown"
-          />
-          <div id="channel-title">Channels</div>
-        </div>
-
         {channels.map((channels, index) => (
           <div className="channel-con" key={index}>
             <img
@@ -174,10 +168,21 @@ export default function ListOfChannels({
   //output
   return (
     <>
-      <div id="workspaces">
-        <h1 id="server">Avion School</h1>
+      <div className="header">
+        <div className="header-title" onClick={() => {
+          setIsChannelHeaderClicked(!isChannelHeaderClicked);
+        }}>
+          <div className="button-dropdown">
+            {isChannelHeaderClicked ? <MdArrowDropDown /> : <MdArrowRight />}
+          </div>
+          <span>Channels</span>
+        </div>
       </div>
-      <MyChannels />
+      <nav className={`${isChannelHeaderClicked ? "active" : "inactive"}`}>
+        <ul className="ul-DMUsers">
+          <MyChannels />
+        </ul>
+      </nav>
       {modal ? (
         <div>
           <div className="modal-overlay">
