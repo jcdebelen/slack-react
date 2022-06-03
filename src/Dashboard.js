@@ -31,6 +31,7 @@ export default function Dashboard({ requiredHeaders }) {
           setChannelStatus={setChannelStatus}
           setReceiverClass={setReceiverClass}
           setSelectedUserId={setSelectedUserId}
+          setSelectedUserEmail={setSelectedUserEmail}
         />
         <ListOfDMs
           requiredHeaders={requiredHeaders}
@@ -44,6 +45,7 @@ export default function Dashboard({ requiredHeaders }) {
           requiredHeaders={requiredHeaders}
           currentChannel={currentChannel}
           channelStatus={channelStatus}
+          receiverClass={receiverClass}
         />
         <Messages
           requiredHeaders={requiredHeaders}

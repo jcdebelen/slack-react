@@ -4,6 +4,7 @@ export default function Channels({
   currentChannel,
   channelStatus,
   requiredHeaders,
+  receiverClass,
 }) {
   let [modal, setModal] = useState(false);
   let [member, setMember] = useState("");
@@ -176,20 +177,24 @@ export default function Channels({
           ) : (
             <></>
           )}
-          <button
-            onClick={() => {
-              setModal(true);
-            }}
-          >
-            {currentChannel.name}
-          </button>
-          <button
-            onClick={() => {
-              setModal(true);
-            }}
-          >
-            {currentChannel.channel_members.length}
-          </button>
+          {receiverClass === "Channel" ? (
+            <div>
+              <button
+                onClick={() => {
+                  setModal(true);
+                }}
+              >
+                {currentChannel.name}
+              </button>
+              <button
+                onClick={() => {
+                  setModal(true);
+                }}
+              >
+                {currentChannel.channel_members.length}
+              </button>
+            </div>
+          ) : null}
         </>
       ) : (
         <></>

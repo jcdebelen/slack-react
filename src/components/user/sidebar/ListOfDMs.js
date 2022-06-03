@@ -16,8 +16,11 @@ export default function ListOfDMs({
   // const [isUserSelected, setIsUserSelected] = useState(false);
 
   useEffect(() => {
-    apiRecentDM();
-  }, [recentDMUsers]);
+    let intervalId = setInterval(() => {
+      apiRecentDM();
+    }, 1000);
+    return () => clearInterval(intervalId);
+  });
 
   const handleNewMessageClicked = () => {
     setSelectedUserEmail("New Message");
@@ -77,7 +80,7 @@ export default function ListOfDMs({
   function DMUser({ email, id, setSelectedUserEmail, setSelectedUserId }) {
     // const [isUserClicked, setIsUserClicked] = useState(false);
 
-    const handleUserClicked = () => {
+    const handleUserClicked = (e) => {
       setSelectedUserEmail(email);
       setSelectedUserId(id);
       setReceiverClass("User");

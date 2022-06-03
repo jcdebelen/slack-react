@@ -118,9 +118,9 @@ export default function Messages({
     showUser(requiredHeaders);
   }, [searchUserInput]);
 
-  useEffect(() => {
-    updateScroll(document.querySelector(".messages-container"));
-  }, [listOfMessages]);
+  // useEffect(() => {
+  //   updateScroll(document.querySelector(".messages-container"));
+  // }, [listOfMessages]);
 
   function updateScroll(element) {
     element.scrollTop = element.scrollHeight;
@@ -131,6 +131,9 @@ export default function Messages({
     sendMessage(requiredHeaders, selectedUserId, messageInput);
     retrieveMessage(requiredHeaders, selectedUserId);
     setMessageInput("");
+    setTimeout(() => {
+      updateScroll(document.querySelector(".messages-container"));
+    }, 500);
   }
 
   function showUser(headersObject) {
@@ -161,15 +164,21 @@ export default function Messages({
 
   return (
     <div className="messages-dashboard">
-      <h1 className="receiver-name">{selectedUserEmail}</h1>
-      {selectedUserId === "" ? (
-        <input
-          className="search-all-user-input"
-          type="text"
-          value={searchUserInput}
-          onChange={(e) => setSearchUserInput(e.target.value)}
-        />
-      ) : null}
+      <div className="name-and-input">
+        <h1 className="receiver-name">{selectedUserEmail}</h1>
+        {selectedUserId === "" ? (
+          <div className="search-div">
+            <p>To:</p>
+            <input
+              className="search-all-user-input"
+              placeholder="name@email.com"
+              type="text"
+              value={searchUserInput}
+              onChange={(e) => setSearchUserInput(e.target.value)}
+            />
+          </div>
+        ) : null}
+      </div>
       {searchUserInput === "" ? null : (
         <ul className="searched-user-container">{searchedUserList}</ul>
       )}
@@ -184,14 +193,18 @@ export default function Messages({
             sendMessage(requiredHeaders, selectedUserId, messageInput);
             retrieveMessage(requiredHeaders, selectedUserId);
             setMessageInput("");
+            setTimeout(() => {
+              updateScroll(document.querySelector(".messages-container"));
+            }, 500);
           }
         }}
         onSubmit={submitHandler}
       >
         <textarea
-          className="message-body"
+          className="message-body-input"
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
+          placeholder={`Message ${selectedUserEmail}`}
         ></textarea>
         <input className="send-message-button" type="submit" value="Send" />
       </form>

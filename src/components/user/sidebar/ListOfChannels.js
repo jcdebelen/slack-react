@@ -7,6 +7,7 @@ export default function ListOfChannels({
   setChannelStatus,
   setReceiverClass,
   setSelectedUserId,
+  setSelectedUserEmail,
 }) {
   let [newChannel, setNewChannel] = useState("");
   let [modal, setModal] = useState(false);
@@ -136,6 +137,7 @@ export default function ListOfChannels({
                 getChannelInfo(channels.id);
                 setReceiverClass("Channel");
                 setSelectedUserId(channels.id);
+                setSelectedUserEmail(`Channel: ${channels.name}`);
               }}
             >
               {channels.name}
