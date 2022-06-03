@@ -511,3 +511,26 @@ h3 {
   margin: 0;
   padding: 0;
 }
+
+.space-between {
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.on-hover {
+  cursor: pointer;
+}
+
+.add-border {
+  background-color: white;
+  padding: 1px;
+  border-radius: 10px;
+  font-size: 1em;
+}
+.margin-right {
+  margin-right: 10px;
+  margin-top: 8px;
+}
+.wrapperr {
+  flex-wrap: wrap;
+}

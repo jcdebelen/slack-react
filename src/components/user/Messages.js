@@ -164,21 +164,23 @@ export default function Messages({
 
   return (
     <div className="messages-dashboard">
-      <div className="name-and-input">
-        <h1 className="receiver-name">{selectedUserEmail}</h1>
-        {selectedUserId === "" ? (
-          <div className="search-div">
-            <p>To:</p>
-            <input
-              className="search-all-user-input"
-              placeholder="name@email.com"
-              type="text"
-              value={searchUserInput}
-              onChange={(e) => setSearchUserInput(e.target.value)}
-            />
-          </div>
-        ) : null}
-      </div>
+      {receiverClass === "User" ? (
+        <div className="name-and-input">
+          <h1 className="receiver-name">{selectedUserEmail}</h1>
+          {selectedUserId === "" ? (
+            <div className="search-div">
+              <p>To:</p>
+              <input
+                className="search-all-user-input"
+                placeholder="name@email.com"
+                type="text"
+                value={searchUserInput}
+                onChange={(e) => setSearchUserInput(e.target.value)}
+              />
+            </div>
+          ) : null}
+        </div>
+      ) : null}
       {searchUserInput === "" ? null : (
         <ul className="searched-user-container">{searchedUserList}</ul>
       )}

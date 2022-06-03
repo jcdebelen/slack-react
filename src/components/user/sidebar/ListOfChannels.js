@@ -239,7 +239,7 @@ export default function ListOfChannels({
                             add
                           </button>
                         </form>
-                        <div className="flex">
+                        <div className="flex wrapperr">
                           {members.map((email, index) => (
                             <div key={index} className="members">
                               <p className="box">{email}</p>
