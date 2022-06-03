@@ -1,7 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-export default function ListOfChannels({ requiredHeaders }) {
+export default function ListOfChannels({
+  requiredHeaders,
+  setCurrentChannel,
+  setChannelStatus,
+}) {
   let [newChannel, setNewChannel] = useState("");
   let [modal, setModal] = useState(false);
   let [members, setMembers] = useState([]);
@@ -120,7 +124,14 @@ export default function ListOfChannels({ requiredHeaders }) {
               alt="hash"
               className="icon"
             />
-            <div className="channel-name">{channels.name}</div>
+            <div
+              className="channel-name"
+              onClick={() => {
+                getChannelInfo(channels.id);
+              }}
+            >
+              {channels.name}
+            </div>
           </div>
         ))}
         <div className="channel-con">
@@ -135,6 +146,21 @@ export default function ListOfChannels({ requiredHeaders }) {
         </div>
       </>
     );
+  };
+
+  //get channel info
+  let getChannelInfo = (channelid) => {
+    fetch(
+      "http://206.189.91.54//api/v1/channels/" + channelid.toString(),
+      requestGet
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        let parse = JSON.parse(result).data;
+        setCurrentChannel(parse);
+        setChannelStatus(true);
+      })
+      .catch((error) => console.log("error", error));
   };
 
   //output
@@ -205,9 +231,9 @@ export default function ListOfChannels({ requiredHeaders }) {
                         </form>
                         <div className="flex">
                           {members.map((email, index) => (
-                            <p key={index} className="members">
+                            <div key={index} className="members">
                               <p className="box">{email}</p>
-                            </p>
+                            </div>
                           ))}
                         </div>
                       </div>
