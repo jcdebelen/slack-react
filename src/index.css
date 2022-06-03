@@ -43,7 +43,7 @@ code {
 .subform {
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  /* margin: 10px; */
 }
 
 .input {
@@ -66,7 +66,8 @@ code {
 
 #submit {
   margin-top: 10px;
-  width: 20vw;
+  width: 19vw;
+  min-width: 200px;
   height: 40px;
   font-weight: bold;
   color: white;
@@ -75,7 +76,6 @@ code {
   font-size: 18px;
   border-radius: 5px;
   letter-spacing: -1px;
-  min-width: 212px;
 }
 
 /* Sidebar css */
@@ -83,7 +83,7 @@ code {
   min-width: 260px;
   background-color: #3f0e40;
   color: #d1d2d3;
-}
+} */
 
 .sidebar-header {
   display: flex;
@@ -102,6 +102,10 @@ code {
   background-color: #350d36;
 }
 
+.sidebar-content {
+  overflow-y: auto;
+}
+
 .button-new-message {
   color: #3f0e40;
   background-color: #fff;
@@ -109,7 +113,10 @@ code {
   height: 34px;
   width: 34px;
   display: flex;
-  justify-content: center; */
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
 
 #dashboard {
   height: 100vh;
@@ -119,17 +126,23 @@ code {
 }
 
 #sidebar {
-  background-color: rgb(85, 26, 85);
+  background-color: #3f0e40;
   width: 17%;
   height: 100vh;
   color: rgba(255, 255, 255, 0.85);
   min-width: 200px;
   max-width: 265px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  justify-content: space-between;
 }
 
 #conversations {
-  width: 83%;
+  width: 100%;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 }
 
 .channel-con {
@@ -142,7 +155,7 @@ code {
 }
 
 /* ListofDMs css */
-.header-dm {
+.header {
   padding-left: 16px;
   padding-right: 16px;
   display: flex;
@@ -190,11 +203,11 @@ code {
   visibility: hidden;
 }
 
-.dms-active {
+.active {
   display: block;
 }
 
-.dms-inactive {
+.inactive {
   display: none;
 }
 
@@ -272,7 +285,66 @@ code {
   color: white;
 }
 
+.receiver-name {
+  font-size: 1.3em;
+  padding: 0.5rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.name-and-input {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0.25rem;
+  box-shadow: 1px 1px 3px 1px black;
+}
+
+.search-div {
+  display: flex;
+  padding: 0.5rem;
+  align-items: baseline;
+}
+
+.search-all-user-input {
+  width: 100%;
+  margin: 0 1rem;
+  border-radius: 7px;
+  padding: 0.35rem;
+  position: relative;
+  border: 0;
+  outline: none;
+}
+
+.searched-user-container {
+  display: block;
+  position: absolute;
+  overflow-y: scroll;
+  top: 110px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 2px 0px black;
+  background-color: hsl(0, 0%, 100%);
+  margin: 1rem;
+  padding: 0 2.5rem;
+  max-height: 500px;
+  z-index: 999;
+}
+
+.searched-user-container > * {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.searched-user-container > *:hover {
+  background-color: #5676e0;
+  border-radius: 5px;
+  font-weight: 400;
+}
+
 .message-container {
+  /* margin: 0.2rem; */
+  padding: 0.5rem;
+  font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: column;
   font-size: 1rem;
@@ -282,55 +354,34 @@ code {
   display: flex;
   align-items: center;
   gap: 1%;
+  margin: 0.25rem 0;
+  font-family: "Poppins", sans-serif;
 }
 
 .sender-uid {
-  font-size: 1.2em;
+  font-size: 0.9em;
+  font-weight: 900;
+  font-family: "Poppins", sans-serif;
+  /* text-shadow: 0px 0px 2px hsl(0, 0%, 0%, 0.2); */
 }
 
 .time-sent {
   font-size: 0.5em;
+  font-family: "Poppins", sans-serif;
 }
 
 .message-body {
   font-size: 1em;
   margin: 0;
-}
-
-.searched-user-container {
-  display: block;
-  position: absolute;
-  overflow-y: scroll;
-  border-radius: 10px;
-  margin: 1rem;
-  padding: 1rem;
-  max-height: 500px;
-  z-index: 999;
-  background-color: purple;
-}
-
-.searched-user-container > * {
-  margin: 0.5rem;
-  padding: 0.5rem;
-  cursor: pointer;
-}
-
-.searched-user-container > *:hover {
-  background-color: aqua;
-}
-
-.search-all-user-input {
-  width: 95%;
-  margin: 0 1rem;
-  border-radius: 7px;
-  padding: 0.35rem;
+  font-family: "Poppins", sans-serif;
 }
 
 .messages-container {
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 0;
   height: 78vh;
   overflow-y: scroll;
+  font-family: "Poppins", sans-serif;
 }
 
 .send-message-form {
@@ -338,14 +389,43 @@ code {
   margin: 0.5rem;
 }
 
-.message-body {
+.message-body-input {
   flex-grow: 2;
+  border-radius: 5px;
+  padding: 1rem;
+  font-family: "Poppins", sans-serif;
 }
 
 .send-message-button {
   height: 100px;
+  width: 80px;
+  border: 0;
+  background-color: transparent;
+  box-shadow: 0 0 1.5px 1px black;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
 }
 
 .messages-dashboard {
   flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#logout-button {
+  background-color: transparent;
+  padding: 0.5rem;
+  box-shadow: 1px 1px 1px 1px black;
+  border-radius: 5px;
+  height: 35px;
+}
+
+.error {
+  margin-top: 3px;
+  color: red;
+  width: 19vw;
+  min-width: 200px;
+  font-size: 14px;
+  min-height: 20px;
 }

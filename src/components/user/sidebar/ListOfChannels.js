@@ -1,5 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { MdArrowDropDown } from "react-icons/md";
+import { MdArrowRight } from "react-icons/md";
 
 export default function ListOfChannels({
   requiredHeaders,
@@ -7,6 +9,7 @@ export default function ListOfChannels({
   setChannelStatus,
   setReceiverClass,
   setSelectedUserId,
+  setSelectedUserEmail,
 }) {
   let [newChannel, setNewChannel] = useState("");
   let [modal, setModal] = useState(false);
@@ -14,6 +17,7 @@ export default function ListOfChannels({
   let [member, setMember] = useState("");
   let [ids, setIds] = useState([]);
   let [channels, setChannels] = useState([]);
+  let [isChannelHeaderClicked, setIsChannelHeaderClicked] = useState(false);
 
   useEffect(() => {
     setChannels(channels);
@@ -56,10 +60,9 @@ export default function ListOfChannels({
       })
       .then((result) => {
         console.log(result);
+        getChannelList();
       })
       .catch((error) => console.log("error", error));
-
-    getChannelList();
   };
 
   let addMember = (newMember) => {
@@ -86,7 +89,10 @@ export default function ListOfChannels({
               return [id, ...prevData];
             });
           }
-        } else console.log("no user");
+        } else {
+          console.log("no user");
+        }
+        setMember("");
       })
       .catch((error) => console.log("error", error));
   };
@@ -114,15 +120,6 @@ export default function ListOfChannels({
   let MyChannels = () => {
     return (
       <>
-        <div id="channel-title-con">
-          <img
-            src={`${process.env.PUBLIC_URL}arrowdown.png`}
-            alt="arrowdown"
-            className="arrowdown"
-          />
-          <div id="channel-title">Channels</div>
-        </div>
-
         {channels.map((channels, index) => (
           <div className="channel-con" key={index}>
             <img
@@ -136,6 +133,7 @@ export default function ListOfChannels({
                 getChannelInfo(channels.id);
                 setReceiverClass("Channel");
                 setSelectedUserId(channels.id);
+                setSelectedUserEmail(`Channel: ${channels.name}`);
               }}
             >
               {channels.name}
@@ -174,10 +172,24 @@ export default function ListOfChannels({
   //output
   return (
     <>
-      <div id="workspaces">
-        <h1 id="server">Avion School</h1>
+      <div className="header">
+        <div
+          className="header-title"
+          onClick={() => {
+            setIsChannelHeaderClicked(!isChannelHeaderClicked);
+          }}
+        >
+          <div className="button-dropdown">
+            {isChannelHeaderClicked ? <MdArrowDropDown /> : <MdArrowRight />}
+          </div>
+          <span>Channels</span>
+        </div>
       </div>
-      <MyChannels />
+      <nav className={`${isChannelHeaderClicked ? "active" : "inactive"}`}>
+        <ul className="ul-DMUsers">
+          <MyChannels />
+        </ul>
+      </nav>
       {modal ? (
         <div>
           <div className="modal-overlay">
@@ -237,7 +249,7 @@ export default function ListOfChannels({
                             add
                           </button>
                         </form>
-                        <div className="flex">
+                        <div className="flex wrapperr">
                           {members.map((email, index) => (
                             <div key={index} className="members">
                               <p className="box">{email}</p>

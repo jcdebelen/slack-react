@@ -4,12 +4,18 @@ export default function Channels({
   currentChannel,
   channelStatus,
   requiredHeaders,
+  receiverClass,
 }) {
   let [modal, setModal] = useState(false);
   let [member, setMember] = useState("");
   let [currentMembers, setCurrentMembers] = useState([]);
   let [currentId, setCurrentId] = useState();
   let [owner, setOwner] = useState("");
+  const [memberNumber, setMemberNumber] = useState(0);
+
+  useEffect(() => {
+    setMemberNumber(currentMembers.length);
+  }, [currentMembers]);
 
   var myHeaders = new Headers();
   myHeaders.append("access-token", requiredHeaders.accessToken);
@@ -153,7 +159,7 @@ export default function Channels({
                     </form>
                     <span>
                       <strong>
-                        <div className="flexx">
+                        <div className="flexx wrapperr">
                           {currentMembers.map((email, index) => (
                             <div key={index} className="members">
                               <p className="boxx">{email}</p>
@@ -176,20 +182,42 @@ export default function Channels({
           ) : (
             <></>
           )}
-          <button
-            onClick={() => {
-              setModal(true);
-            }}
-          >
-            {currentChannel.name}
-          </button>
-          <button
-            onClick={() => {
-              setModal(true);
-            }}
-          >
-            {currentChannel.channel_members.length}
-          </button>
+          {receiverClass === "Channel" ? (
+            <div>
+              <div class="name-and-input space-between">
+                <h1
+                  class="receiver-name on-hover"
+                  onClick={() => {
+                    setModal(true);
+                  }}
+                >
+                  #{currentChannel.name}
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path d="M7 10l5 5 5-5z"></path>
+                  </svg>
+                </h1>
+                <div className="margin-right">
+                  <button
+                    className="receiver-name add-border on-hover"
+                    onClick={() => {
+                      setModal(true);
+                    }}
+                  >
+                    {memberNumber} members
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </>
       ) : (
         <></>
