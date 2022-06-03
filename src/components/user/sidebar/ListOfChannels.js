@@ -5,6 +5,8 @@ export default function ListOfChannels({
   requiredHeaders,
   setCurrentChannel,
   setChannelStatus,
+  setReceiverClass,
+  setSelectedUserId,
 }) {
   let [newChannel, setNewChannel] = useState("");
   let [modal, setModal] = useState(false);
@@ -12,6 +14,10 @@ export default function ListOfChannels({
   let [member, setMember] = useState("");
   let [ids, setIds] = useState([]);
   let [channels, setChannels] = useState([]);
+
+  useEffect(() => {
+    setChannels(channels);
+  }, [channels]);
 
   //Headers
   var myHeaders = new Headers();
@@ -128,6 +134,8 @@ export default function ListOfChannels({
               className="channel-name"
               onClick={() => {
                 getChannelInfo(channels.id);
+                setReceiverClass("Channel");
+                setSelectedUserId(channels.id);
               }}
             >
               {channels.name}
