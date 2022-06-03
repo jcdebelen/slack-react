@@ -11,6 +11,11 @@ export default function Channels({
   let [currentMembers, setCurrentMembers] = useState([]);
   let [currentId, setCurrentId] = useState();
   let [owner, setOwner] = useState("");
+  const [memberNumber, setMemberNumber] = useState(0);
+
+  useEffect(() => {
+    setMemberNumber(currentMembers.length);
+  }, [currentMembers]);
 
   var myHeaders = new Headers();
   myHeaders.append("access-token", requiredHeaders.accessToken);
@@ -207,7 +212,7 @@ export default function Channels({
                       setModal(true);
                     }}
                   >
-                    {currentChannel.channel_members.length} members
+                    {memberNumber} members
                   </button>
                 </div>
               </div>

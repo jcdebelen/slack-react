@@ -17,7 +17,7 @@ export default function ListOfChannels({
   let [member, setMember] = useState("");
   let [ids, setIds] = useState([]);
   let [channels, setChannels] = useState([]);
-  let [isChannelHeaderClicked, setIsChannelHeaderClicked] = useState(false)
+  let [isChannelHeaderClicked, setIsChannelHeaderClicked] = useState(false);
 
   useEffect(() => {
     setChannels(channels);
@@ -60,10 +60,9 @@ export default function ListOfChannels({
       })
       .then((result) => {
         console.log(result);
+        getChannelList();
       })
       .catch((error) => console.log("error", error));
-
-    getChannelList();
   };
 
   let addMember = (newMember) => {
@@ -171,9 +170,12 @@ export default function ListOfChannels({
   return (
     <>
       <div className="header">
-        <div className="header-title" onClick={() => {
-          setIsChannelHeaderClicked(!isChannelHeaderClicked);
-        }}>
+        <div
+          className="header-title"
+          onClick={() => {
+            setIsChannelHeaderClicked(!isChannelHeaderClicked);
+          }}
+        >
           <div className="button-dropdown">
             {isChannelHeaderClicked ? <MdArrowDropDown /> : <MdArrowRight />}
           </div>

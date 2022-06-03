@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Messages from "./components/user/Messages";
 import Channels from "./components/user/Channels";
 import ListOfChannels from "./components/user/sidebar/ListOfChannels";
