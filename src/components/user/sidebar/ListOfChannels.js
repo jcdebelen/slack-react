@@ -231,9 +231,9 @@ export default function ListOfChannels({
                         </form>
                         <div className="flex">
                           {members.map((email, index) => (
-                            <p key={index} className="members">
+                            <div key={index} className="members">
                               <p className="box">{email}</p>
-                            </p>
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -268,10 +268,6 @@ export default function ListOfChannels({
       ) : (
         <></>
       )}
-      <button className="" onClick={() => setModal(true)}>
-        {" "}
-        Create Channel
-      </button>
     </>
   );
 }
