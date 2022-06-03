@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import "./components/user/messages.css";
+import "./modal.css";
 import Main from "./Main";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
-let isAuthenticated = false;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

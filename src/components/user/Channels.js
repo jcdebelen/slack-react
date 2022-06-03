@@ -1,27 +1,62 @@
-import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Channels({ accessToken, clientToken, expiry, uid }) {
-  let [channel, setChannel] = useState("");
-  let id = [2087];
+export default function Channels({
+  currentChannel,
+  channelStatus,
+  requiredHeaders,
+}) {
+  let [modal, setModal] = useState(false);
+  let [member, setMember] = useState("");
+  let [currentMembers, setCurrentMembers] = useState([]);
+  let [currentId, setCurrentId] = useState();
+  let [owner, setOwner] = useState("");
 
-  let createChannel = (channel, id) => {
+  var myHeaders = new Headers();
+  myHeaders.append("access-token", requiredHeaders.accessToken);
+  myHeaders.append("client", requiredHeaders.clientToken);
+  myHeaders.append("expiry", requiredHeaders.expiry);
+  myHeaders.append("uid", requiredHeaders.uid);
+  var requestGet = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  let searchMember = (member) => {
+    fetch("http://206.189.91.54//api/v1/users", requestGet)
+      .then((response) => response.text())
+      .then((result) => {
+        let parse = JSON.parse(result).data;
+        let find = parse.find((email) => {
+          return email.uid === member;
+        });
+        setCurrentId(find.id);
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  useEffect(() => {
+    fetch("http://206.189.91.54//api/v1/users", requestGet)
+      .then((response) => response.text())
+      .then((result) => {
+        let parse = JSON.parse(result).data;
+        let find = parse.find((email) => {
+          return email.id === currentChannel.owner_id;
+        });
+        setOwner(find.uid);
+      })
+      .catch((error) => console.log("error", error));
+  }, [currentChannel.owner_id]);
+
+  let addMember = () => {
     let data = {
-      name: channel,
-      user_ids: id,
+      id: currentChannel.id,
+      member_id: currentId,
     };
-
-    var myHeaders = new Headers();
-
-    myHeaders.append("access-token", accessToken);
-    myHeaders.append("client", clientToken);
-    myHeaders.append("expiry", expiry);
-    myHeaders.append("uid", uid);
-    myHeaders.append("Content-Type", "Application/json");
 
     var raw = JSON.stringify(data);
 
-    console.log({ accessToken, clientToken, expiry, uid });
+    myHeaders.append("Content-Type", "Application/json");
 
     var requestOptions = {
       method: "POST",
@@ -30,31 +65,135 @@ export default function Channels({ accessToken, clientToken, expiry, uid }) {
       redirect: "follow",
     };
 
-    fetch("http://206.189.91.54//api/v1/channels", requestOptions)
-      .then((response) => {
-        return response.text();
-      })
+    fetch("http://206.189.91.54//api/v1/channel/add_member", requestOptions)
+      .then((response) => response.text())
       .then((result) => {
         console.log(result);
+        let a = JSON.parse(result);
+        if (
+          a.error !== "Invalid user" ||
+          a.error !== "User is already a member of this channel!"
+        )
+          temporary(member);
       })
       .catch((error) => console.log("error", error));
   };
+
+  useEffect(() => {
+    addMember();
+  }, [currentId]);
+
+  let temporary = (newMember) => {
+    setCurrentMembers((data) => {
+      return [newMember, ...data];
+    });
+  };
+
+  useEffect(() => {
+    fetch("http://206.189.91.54//api/v1/users", requestGet)
+      .then((response) => response.text())
+      .then((result) => {
+        let parse = JSON.parse(result).data;
+        let membersArray = currentChannel.channel_members.map((id) => {
+          return parse.find((email) => {
+            return email.id === id.user_id;
+          });
+        });
+        setCurrentMembers(
+          membersArray.map((email) => {
+            return email.uid;
+          })
+        );
+      })
+      .catch((error) => console.log("error", error));
+  }, [currentChannel.channel_members]);
+
   return (
-    <div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          createChannel(channel, id);
-        }}
-      >
-        <input
-          type="text"
-          className="input"
-          value={channel}
-          onChange={(e) => setChannel(e.target.value)}
-        ></input>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <>
+      {channelStatus ? (
+        <>
+          {modal ? (
+            <div className="c-sk-overlay">
+              <div className="c-sk-modal c-sk-modal--fixed p-channel_create_modal">
+                <div className="c-sk-modal_title_bar c-sk-modal_title_bar--pad_right flex-dir">
+                  <h1 className="">
+                    <span>{currentChannel.name}</span>
+                  </h1>
+
+                  <div className="p-field_group">
+                    <div className="paddingg">
+                      <h3>Created by</h3>
+                      <div>
+                        {owner} on {currentChannel.created_at.substring(0, 10)}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="c-scrollbar">
+                    <label>Add New Members</label>
+                    <form
+                      className="flexx"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        searchMember(member);
+                      }}
+                    >
+                      <input
+                        className="c-input_text c-select_input"
+                        placeholder="email"
+                        type="email"
+                        value={member}
+                        onChange={(e) => setMember(e.target.value)}
+                      />
+                      <button
+                        type="submit"
+                        className="c-button c-button--primary c-button--medium"
+                      >
+                        add
+                      </button>
+                    </form>
+                    <span>
+                      <strong>
+                        <div className="flexx">
+                          {currentMembers.map((email, index) => (
+                            <div key={index} className="members">
+                              <p className="boxx">{email}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </strong>
+                    </span>
+                  </div>
+                </div>
+                <button
+                  className="c-button-unstyled c-icon_button c-icon_button--size_medium c-sk-modal__close_button"
+                  type="button"
+                  onClick={() => setModal(false)}
+                >
+                  <span>&#10006;</span>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
+          <button
+            onClick={() => {
+              setModal(true);
+            }}
+          >
+            {currentChannel.name}
+          </button>
+          <button
+            onClick={() => {
+              setModal(true);
+            }}
+          >
+            {currentChannel.channel_members.length}
+          </button>
+        </>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
