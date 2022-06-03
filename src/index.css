@@ -125,6 +125,8 @@ code {
   color: rgba(255, 255, 255, 0.85);
   min-width: 200px;
   max-width: 265px;
+  display: flex;
+  flex-direction: column;
 }
 
 #conversations {
@@ -400,4 +402,12 @@ code {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+
+#logout-button {
+  background-color: transparent;
+  padding: 0.5rem;
+  box-shadow: 1px 1px 1px 1px black;
+  border-radius: 5px;
+  height: 35px;
 }

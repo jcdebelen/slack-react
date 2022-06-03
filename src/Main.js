@@ -18,7 +18,10 @@ export default function Main() {
   return (
     <div>
       {isAuthenticated ? (
-        <Dashboard requiredHeaders={requiredHeaders} />
+        <Dashboard
+          requiredHeaders={requiredHeaders}
+          setRequiredHeaders={setRequiredHeaders}
+        />
       ) : (
         <App setRequiredHeaders={setRequiredHeaders} />
       )}

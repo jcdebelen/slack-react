@@ -6,7 +6,7 @@ import ListOfDMs from "./components/user/sidebar/ListOfDMs";
 import { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 
-export default function Dashboard({ requiredHeaders }) {
+export default function Dashboard({ requiredHeaders, setRequiredHeaders }) {
   let [currentChannel, setCurrentChannel] = useState({});
   let [channelStatus, setChannelStatus] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState("");
@@ -39,6 +39,9 @@ export default function Dashboard({ requiredHeaders }) {
           setSelectedUserId={setSelectedUserId}
           setReceiverClass={setReceiverClass}
         />
+        <button id="logout-button" onClick={(e) => setRequiredHeaders(false)}>
+          Logout
+        </button>
       </nav>
       <div id="conversations">
         <Channels

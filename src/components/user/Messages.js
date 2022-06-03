@@ -100,6 +100,14 @@ export default function Messages({
   ));
 
   useEffect(() => {
+    /* Remove list of searched user */
+    setSearchUserInput("");
+  }, [selectedUserId]);
+
+  useEffect(() => {
+    /* To refresh message history upon changing the selected user & every second */
+    retrieveMessage(requiredHeaders, selectedUserId);
+
     const interval = setInterval(() => {
       if (selectedUserId === null || selectedUserId === "") return;
       console.log(selectedUserId);
@@ -110,19 +118,12 @@ export default function Messages({
   }, [selectedUserId]);
 
   useEffect(() => {
-    if (selectedUserId === null || selectedUserId === "") return;
-    retrieveMessage(requiredHeaders, selectedUserId);
-  }, [selectedUserId, messageInput]);
-
-  useEffect(() => {
-    showUser(requiredHeaders);
+    /* Show all user based on what is entered on input */
+    getListOfUser(requiredHeaders);
   }, [searchUserInput]);
 
-  // useEffect(() => {
-  //   updateScroll(document.querySelector(".messages-container"));
-  // }, [listOfMessages]);
-
   function updateScroll(element) {
+    /* Scroll to bottom of overflow */
     element.scrollTop = element.scrollHeight;
   }
 
@@ -136,7 +137,7 @@ export default function Messages({
     }, 500);
   }
 
-  function showUser(headersObject) {
+  function getListOfUser(headersObject) {
     let myHeaders = new Headers();
     myHeaders.append("access-token", headersObject.accessToken);
     myHeaders.append("client", headersObject.clientToken);
@@ -164,21 +165,23 @@ export default function Messages({
 
   return (
     <div className="messages-dashboard">
-      <div className="name-and-input">
-        <h1 className="receiver-name">{selectedUserEmail}</h1>
-        {selectedUserId === "" ? (
-          <div className="search-div">
-            <p>To:</p>
-            <input
-              className="search-all-user-input"
-              placeholder="name@email.com"
-              type="text"
-              value={searchUserInput}
-              onChange={(e) => setSearchUserInput(e.target.value)}
-            />
-          </div>
-        ) : null}
-      </div>
+      {receiverClass === "Channel" ? null : (
+        <div className="name-and-input">
+          <h1 className="receiver-name">{selectedUserEmail}</h1>
+          {selectedUserId === "" ? (
+            <div className="search-div">
+              <p>To:</p>
+              <input
+                className="search-all-user-input"
+                placeholder="name@email.com"
+                type="text"
+                value={searchUserInput}
+                onChange={(e) => setSearchUserInput(e.target.value)}
+              />
+            </div>
+          ) : null}
+        </div>
+      )}
       {searchUserInput === "" ? null : (
         <ul className="searched-user-container">{searchedUserList}</ul>
       )}
