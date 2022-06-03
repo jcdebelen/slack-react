@@ -21,6 +21,7 @@ export default function ListOfDMs({
 
   const handleNewMessageClicked = () => {
     setSelectedUserEmail("New Message");
+    setReceiverClass("User");
     setSelectedUserId("");
   };
 
