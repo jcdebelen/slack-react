@@ -1,48 +1,49 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-// Send Message API ========================================
-
-function sendMessage(headersObject, receiverId, message) {
-  let myHeaders = new Headers();
-  myHeaders.append("access-token", headersObject.accessToken);
-  myHeaders.append("client", headersObject.clientToken);
-  myHeaders.append("expiry", headersObject.expiry);
-  myHeaders.append("uid", headersObject.uid);
-  myHeaders.append("Content-Type", "Application/json");
-
-  let raw = {
-    receiver_id: receiverId,
-    receiver_class: "User",
-    body: message,
-  };
-
-  let requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: JSON.stringify(raw),
-    redirect: "follow",
-  };
-
-  fetch("http://206.189.91.54//api/v1/messages", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
-}
-
-// ========================================
-
 export default function Messages({
   requiredHeaders,
   selectedUserEmail,
   setSelectedUserEmail,
   selectedUserId,
   setSelectedUserId,
+  receiverClass,
 }) {
   const [messageInput, setMessageInput] = useState("");
   const [listOfMessages, setListOfMessages] = useState([]);
   const [searchUserInput, setSearchUserInput] = useState("");
   const [searchedUser, setSearchedUser] = useState([]);
+
+  // Send Message API ========================================
+
+  function sendMessage(headersObject, receiverId, message) {
+    let myHeaders = new Headers();
+    myHeaders.append("access-token", headersObject.accessToken);
+    myHeaders.append("client", headersObject.clientToken);
+    myHeaders.append("expiry", headersObject.expiry);
+    myHeaders.append("uid", headersObject.uid);
+    myHeaders.append("Content-Type", "Application/json");
+
+    let raw = {
+      receiver_id: receiverId,
+      receiver_class: receiverClass,
+      body: message,
+    };
+
+    let requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify(raw),
+      redirect: "follow",
+    };
+
+    fetch("http://206.189.91.54//api/v1/messages", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }
+
+  // ========================================
 
   // Retrieve Message API ========================================
 
@@ -61,7 +62,7 @@ export default function Messages({
     };
 
     fetch(
-      `http://206.189.91.54//api/v1/messages?sender_id=${headersObject.currentUserId}&receiver_class=User&receiver_id=${senderId}`,
+      `http://206.189.91.54//api/v1/messages?sender_id=${headersObject.currentUserId}&receiver_class=${receiverClass}&receiver_id=${senderId}`,
       requestOptions
     )
       .then((response) => response.text())

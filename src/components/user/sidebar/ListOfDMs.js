@@ -8,6 +8,7 @@ export default function ListOfDMs({
   requiredHeaders,
   setSelectedUserEmail,
   setSelectedUserId,
+  setReceiverClass,
 }) {
   const [isDMHeaderClicked, setIsDMHeaderClicked] = useState(false);
   const [isDMHeaderHovered, setIsDMHeaderHovered] = useState(false);
@@ -78,6 +79,7 @@ export default function ListOfDMs({
     const handleUserClicked = () => {
       setSelectedUserEmail(email);
       setSelectedUserId(id);
+      setReceiverClass("User");
       // setIsUserClicked(true);
     };
 

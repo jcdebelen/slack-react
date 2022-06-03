@@ -11,6 +11,7 @@ export default function Dashboard({ requiredHeaders }) {
   let [channelStatus, setChannelStatus] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [selectedUserEmail, setSelectedUserEmail] = useState("");
+  const [receiverClass, setReceiverClass] = useState("");
 
   const handleNewMessageClicked = () => {
     setSelectedUserEmail("New Message");
@@ -27,11 +28,14 @@ export default function Dashboard({ requiredHeaders }) {
           requiredHeaders={requiredHeaders}
           setCurrentChannel={setCurrentChannel}
           setChannelStatus={setChannelStatus}
+          setReceiverClass={setReceiverClass}
+          setSelectedUserId={setSelectedUserId}
         />
         <ListOfDMs
           requiredHeaders={requiredHeaders}
           setSelectedUserEmail={setSelectedUserEmail}
           setSelectedUserId={setSelectedUserId}
+          setReceiverClass={setReceiverClass}
         />
       </nav>
       <div id="conversations">
@@ -46,6 +50,7 @@ export default function Dashboard({ requiredHeaders }) {
           setSelectedUserEmail={setSelectedUserEmail}
           selectedUserId={selectedUserId}
           setSelectedUserId={setSelectedUserId}
+          receiverClass={receiverClass}
         />
       </div>
     </div>
