@@ -13,11 +13,13 @@ export default function ListOfDMs({
   const [isDMHeaderClicked, setIsDMHeaderClicked] = useState(false);
   const [isDMHeaderHovered, setIsDMHeaderHovered] = useState(false);
   const [recentDMUsers, setRecentDMUsers] = useState([]);
-  // const [isUserSelected, setIsUserSelected] = useState(false);
 
   useEffect(() => {
-    apiRecentDM();
-  }, [recentDMUsers]);
+    let intervalId = setInterval(() => {
+      apiRecentDM()
+    }, 1000);
+    return () => clearInterval(intervalId);
+  });
 
   const handleNewMessageClicked = () => {
     setSelectedUserEmail("New Message");
@@ -60,7 +62,6 @@ export default function ListOfDMs({
     let uniqueRecentDMUsers = [
       ...new Map(recentDMUsers.map((item) => [item["id"], item])).values(),
     ];
-    // console.log(uniqueRecentDMUsers);
 
     return uniqueRecentDMUsers.map(({ email, id }) => (
       <div key={id}>
@@ -75,13 +76,10 @@ export default function ListOfDMs({
   }
 
   function DMUser({ email, id, setSelectedUserEmail, setSelectedUserId }) {
-    // const [isUserClicked, setIsUserClicked] = useState(false);
-
     const handleUserClicked = () => {
       setSelectedUserEmail(email);
       setSelectedUserId(id);
       setReceiverClass("User");
-      // setIsUserClicked(true);
     };
 
     return (
