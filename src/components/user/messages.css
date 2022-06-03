@@ -1,3 +1,22 @@
+.receiver-name,
+.div-search-all-user-input {
+  height: 50px;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid rgba(29, 28, 29, 0.13);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  font-size: 18px;
+}
+
+.div-search-all-user-input {
+  border-bottom: none;
+  box-shadow: 0 1px 0 0 rgba(29,28,29, 0.13), 0 4px 12px -2px #00000014;
+}
+
 .message-container {
   display: flex;
   flex-direction: column;
@@ -46,22 +65,28 @@
 }
 
 .search-all-user-input {
-  width: 95%;
-  margin: 0 1rem;
-  border-radius: 7px;
-  padding: 0.35rem;
+  outline: 0;
+  border: 0;
+  width: 100%;
+  /* margin: 1rem; */
+  /* border-radius: 7px; */
+  /* padding: 0.35rem; */
+  padding-left: 12px;
+  font-size: 15px;
 }
 
 .messages-container {
-  width: 100%;
+  width: 96%;
   padding: 1rem;
-  height: 78vh;
+  padding-top: 0;
+  height: 70vh;
   overflow-y: scroll;
 }
 
 .send-message-form {
   display: flex;
   margin: 0.5rem;
+  margin-top: 0;
 }
 
 .message-body {
@@ -74,4 +99,11 @@
 
 .messages-dashboard {
   flex-grow: 2;
+  height: 100vh;
+  margin-bottom: 24px;
+}
+
+.to {
+  font-size: 15px;
+  color: #616061;
 }
