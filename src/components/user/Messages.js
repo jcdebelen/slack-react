@@ -98,15 +98,15 @@ export default function Messages({
     </li>
   ));
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     if (selectedUserId === null || selectedUserId === "") return;
-  //     console.log(selectedUserId);
-  //     retrieveMessage(requiredHeaders, selectedUserId);
-  //   }, 1000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (selectedUserId === null || selectedUserId === "") return;
+      console.log(selectedUserId);
+      retrieveMessage(requiredHeaders, selectedUserId);
+    }, 1000);
 
-  //   return () => console.log("cleanup");
-  // }, [selectedUserId]);
+    return () => clearInterval(interval);
+  }, [selectedUserId]);
 
   useEffect(() => {
     if (selectedUserId === null || selectedUserId === "") return;
