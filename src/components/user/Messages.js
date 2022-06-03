@@ -98,6 +98,16 @@ export default function Messages({
     </li>
   ));
 
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     if (selectedUserId === null || selectedUserId === "") return;
+  //     console.log(selectedUserId);
+  //     retrieveMessage(requiredHeaders, selectedUserId);
+  //   }, 1000);
+
+  //   return () => console.log("cleanup");
+  // }, [selectedUserId]);
+
   useEffect(() => {
     if (selectedUserId === null || selectedUserId === "") return;
     retrieveMessage(requiredHeaders, selectedUserId);
@@ -107,7 +117,13 @@ export default function Messages({
     showUser(requiredHeaders);
   }, [searchUserInput]);
 
-  function updateScroll(element) {}
+  useEffect(() => {
+    updateScroll(document.querySelector(".messages-container"));
+  }, [listOfMessages]);
+
+  function updateScroll(element) {
+    element.scrollTop = element.scrollHeight;
+  }
 
   function submitHandler(e) {
     e.preventDefault();
@@ -134,6 +150,7 @@ export default function Messages({
       .then((response) => response.text())
       .then((result) => {
         let arrayOfUsers = JSON.parse(result).data;
+
         setSearchedUser(
           arrayOfUsers.filter((user) => user.uid.includes(searchUserInput))
         );

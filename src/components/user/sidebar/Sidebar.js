@@ -3,7 +3,6 @@ import { FaRegEdit } from "react-icons/fa";
 
 export default function Sidebar({
   requiredHeaders,
-  selectedUserEmail,
   setSelectedUserEmail,
   setSelectedUserId,
 }) {
@@ -23,7 +22,6 @@ export default function Sidebar({
       <div>
         <ListOfDMs
           requiredHeaders={requiredHeaders}
-          selectedUserEmail={selectedUserEmail}
           setSelectedUserEmail={setSelectedUserEmail}
           setSelectedUserId={setSelectedUserId}
         />

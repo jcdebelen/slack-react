@@ -6,7 +6,6 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 export default function ListOfDMs({
   requiredHeaders,
-  selectedUserEmail,
   setSelectedUserEmail,
   setSelectedUserId,
 }) {
@@ -59,7 +58,7 @@ export default function ListOfDMs({
     let uniqueRecentDMUsers = [
       ...new Map(recentDMUsers.map((item) => [item["id"], item])).values(),
     ];
-    console.log(uniqueRecentDMUsers);
+    // console.log(uniqueRecentDMUsers);
 
     return uniqueRecentDMUsers.map(({ email, id }) => (
       <div key={id}>
