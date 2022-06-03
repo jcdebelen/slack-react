@@ -135,6 +135,7 @@ code {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  justify-content: space-between;
 }
 
 #conversations {

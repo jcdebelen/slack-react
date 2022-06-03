@@ -89,7 +89,10 @@ export default function ListOfChannels({
               return [id, ...prevData];
             });
           }
-        } else console.log("no user");
+        } else {
+          console.log("no user");
+        }
+        setMember("");
       })
       .catch((error) => console.log("error", error));
   };

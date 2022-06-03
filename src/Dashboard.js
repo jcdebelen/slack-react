@@ -9,7 +9,7 @@ import { FaRegEdit } from "react-icons/fa";
 export default function Dashboard({ requiredHeaders, setRequiredHeaders }) {
   let [currentChannel, setCurrentChannel] = useState({});
   let [channelStatus, setChannelStatus] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const [selectedUserEmail, setSelectedUserEmail] = useState("");
   const [receiverClass, setReceiverClass] = useState("");
 
