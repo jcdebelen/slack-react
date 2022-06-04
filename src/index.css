@@ -82,6 +82,9 @@ code {
   letter-spacing: -1px;
 }
 
+#submit:hover {
+  background-color: var(--hover);
+}
 /* Sidebar css */
 /* .sidebar {
   min-width: 260px;
@@ -494,4 +497,20 @@ code {
   min-width: 200px;
   font-size: 14px;
   min-height: 20px;
+}
+
+#login-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#login-logo {
+  height: 30px;
+  margin-right: 10px;
+}
+
+#register-here,
+#login-here {
+  margin-top: 10px;
 }

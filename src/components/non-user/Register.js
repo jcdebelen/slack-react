@@ -62,7 +62,14 @@ const Register = () => {
 
   return (
     <div id="main-con">
-      <h1>Slack Registration</h1>
+      <h1 id="login-title">
+        <img
+          src={`${process.env.PUBLIC_URL}slacklogo.png`}
+          alt="slacklogo"
+          id="login-logo"
+        />
+        Slack Registration
+      </h1>
       <form
         className="forms"
         onSubmit={(e) => {
@@ -102,7 +109,7 @@ const Register = () => {
         </div>
         <input type="submit" id="submit" value="Register"></input>
       </form>
-      <p>
+      <p id="login-here">
         Already registered? Head back to Slack <Link to="/">Login</Link>
       </p>
     </div>

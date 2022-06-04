@@ -60,7 +60,14 @@ const Login = ({ setRequiredHeaders }) => {
 
   return (
     <div id="main-con">
-      <h1>Sign in to Slack</h1>
+      <h1 id="login-title">
+        <img
+          src={`${process.env.PUBLIC_URL}slacklogo.png`}
+          alt="slacklogo"
+          id="login-logo"
+        />
+        Sign in to Slack
+      </h1>
       <form
         className="forms"
         onSubmit={(e) => {
@@ -90,7 +97,7 @@ const Login = ({ setRequiredHeaders }) => {
         </div>
         <input type="submit" id="submit" value="Sign In"></input>
       </form>
-      <p>
+      <p id="register-here">
         Not yet registered? <Link to="/register">Sign Up</Link>
       </p>
     </div>
